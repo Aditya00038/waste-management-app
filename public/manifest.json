@@ -1,0 +1,21 @@
+{
+  "name": "Swachh Bharat PWA",
+  "short_name": "Swachh Bharat",
+  "description": "A platform for a cleaner India.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#388E3C",
+  "icons": [
+    {
+      "src": "/icon-192x192.png.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/icon-512x512.png.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

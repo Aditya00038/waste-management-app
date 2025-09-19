@@ -1,0 +1,76 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'Admin';
+    }
+
+    // Users can read/update their own data. Admins can read anyone's data.
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (isOwner(userId) || isAdmin());
+      allow update: if isAuthenticated() && isOwner(userId);
+      allow create: if isAuthenticated(); // For new user sign-ups
+    }
+
+    // Reports can be created by authenticated users.
+    // They can be read by their owner or an admin.
+    match /reports/{reportId} {
+      allow create: if isAuthenticated();
+      allow read: if isAuthenticated() && (isOwner(resource.data.userId) || isAdmin());
+      allow update: if isAuthenticated() && (isAdmin() || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'Green Champion');
+    }
+
+    // Orders can be created by authenticated users and read by their owner or an admin.
+    match /orders/{orderId} {
+      allow create: if isAuthenticated();
+      allow read: if isAuthenticated() && (isOwner(resource.data.userId) || isAdmin());
+    }
+
+    // Donations can be created and read by any authenticated user.
+    match /donations/{donationId} {
+      allow read, create: if isAuthenticated();
+    }
+    
+    // Community events can be read by anyone authenticated.
+    // Can be created/updated by Admins or Green Champions.
+    match /events/{eventId} {
+       allow read: if isAuthenticated();
+       allow create, update: if isAuthenticated() && (isAdmin() || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'Green Champion');
+    }
+
+    // Publicly readable collections for all authenticated users
+    match /products/{productId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && isAdmin(); // Only Admins can add products
+    }
+    match /articles/{articleId} {
+      allow read: if isAuthenticated();
+    }
+    match /facilities/{facilityId} {
+      allow read: if isAuthenticated();
+    }
+     match /vehicles/{vehicleId} {
+      allow read: if isAuthenticated();
+    }
+    match /rewards/{rewardId} {
+      allow read: if isAuthenticated();
+    }
+    match /badgeTiers/{tierId} {
+      allow read: if isAuthenticated();
+    }
+    match /courses/{courseId}/{*=} {
+      allow read: if isAuthenticated();
+    }
+  }
+}

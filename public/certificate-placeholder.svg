@@ -1,0 +1,34 @@
+<svg width="400" height="250" viewBox="0 0 400 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="400" height="250" rx="10" fill="#F9FAFB"/>
+<rect x="2" y="2" width="396" height="246" rx="8" stroke="#E5E7EB" stroke-width="4"/>
+<g opacity="0.1">
+<path d="M50 250L150 0H250L150 250H50Z" fill="#A7F3D0"/>
+<path d="M250 250L350 0H450L350 250H250Z" fill="#A7F3D0"/>
+</g>
+<g style="mix-blend-mode:multiply">
+<path d="M0 100C133.333 133.333 266.667 166.667 400 200V0H0V100Z" fill="url(#paint0_linear_1_2)"/>
+</g>
+<foreignObject x="40" y="40" width="320" height="40" style="font-family:'PT Sans', sans-serif;font-size:24px;font-weight:bold;fill:#166534;text-align:center;">
+    Certificate of Completion
+</foreignObject>
+<foreignObject x="40" y="90" width="320" height="20" style="font-family:'PT Sans', sans-serif;font-size:14px;fill:#4B5563;text-align:center;">
+    This certifies that
+</foreignObject>
+<foreignObject x="40" y="120" width="320" height="30" style="font-family:'PT Sans', sans-serif;font-size:28px;font-weight:bold;fill:#15803d;text-align:center;">
+    [User Name]
+</foreignObject>
+<foreignObject x="40" y="160" width="320" height="20" style="font-family:'PT Sans', sans-serif;font-size:14px;fill:#4B5563;text-align:center;">
+    has successfully completed the
+</foreignObject>
+<foreignObject x="40" y="180" width="320" height="20" style="font-family:'PT Sans', sans-serif;font-size:16px;font-weight:bold;fill:#166534;text-align:center;">
+    Swachh Bharat Training Course
+</foreignObject>
+<defs>
+<linearGradient id="paint0_linear_1_2" x1="200" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D1FAE5"/>
+<stop offset="1" stop-color="#FEFCE8" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>
+
+    
