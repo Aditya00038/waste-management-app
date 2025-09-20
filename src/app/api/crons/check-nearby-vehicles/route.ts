@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { isVehicleNearby } from '@/lib/vehicle-tracking';
 import { createVehicleProximityNotification } from '@/lib/notifications';
 
@@ -48,8 +48,8 @@ export async function GET() {
         );
         
         // Update the last notified timestamp
-        const userRef = db.collection('users').doc(userId);
-        await userRef.update({
+        const userRef = doc(db, 'users', userId);
+        await updateDoc(userRef, {
           'vehicleNotifications.lastNotified': Date.now()
         });
       }

@@ -23,6 +23,7 @@ export interface VehicleLocation {
     time: number; // timestamp
   };
   vehicleType: 'collection' | 'transport' | 'recycling';
+  distanceInKm?: number; // Added field to store distance from user
 }
 
 // Get all active vehicles

@@ -11,7 +11,6 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { collectionVehicles, wasteData } from '@/lib/data';
 
 const HotspotSchema = z.object({
     location: z.string().describe("The predicted location of the waste hotspot."),
@@ -59,20 +58,20 @@ const hotspotPredictionFlow = ai.defineFlow(
     outputSchema: HotspotPredictionOutputSchema,
   },
   async (input) => {
-    // In a real application, you would pass the actual input to the prompt.
-    // For this demo, we are using a mock call to the LLM to return static data,
-    // as we don't have a live database of reports to analyze.
-    
-    // const {output} = await prompt(input);
-    // return output!;
-
-    return {
-      predictedHotspots: [
-        { location: "Kalyani Nagar Market Area", severity: "High", reasoning: "Frequent reports of wet waste and plastic bottles. Proximity to a market increases risk." },
-        { location: "Behind Phoenix Mall, Viman Nagar", severity: "Medium", reasoning: "Several reports of construction debris and packaging materials." },
-        { location: "Mutha River Bank, near Deccan Gymkhana", severity: "Low", reasoning: "Seasonal increase in tourist-related litter observed in past data." }
-      ]
-    };
+    try {
+      const {output} = await prompt(input);
+      return output!;
+    } catch (error) {
+      console.error('Error in AI hotspot prediction:', error);
+      // Fallback to mock data if AI fails
+      return {
+        predictedHotspots: [
+          { location: "Kalyani Nagar Market Area", severity: "High" as const, reasoning: "Frequent reports of wet waste and plastic bottles. Proximity to a market increases risk." },
+          { location: "Behind Phoenix Mall, Viman Nagar", severity: "Medium" as const, reasoning: "Several reports of construction debris and packaging materials." },
+          { location: "Mutha River Bank, near Deccan Gymkhana", severity: "Low" as const, reasoning: "Seasonal increase in tourist-related litter observed in past data." }
+        ]
+      };
+    }
   }
 );
 

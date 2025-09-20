@@ -16,6 +16,8 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  // Fix for workspace root warning
+  outputFileTracingRoot: __dirname,
   experimental: {
     optimizeCss: true,
     scrollRestoration: true,
