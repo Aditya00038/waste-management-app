@@ -161,8 +161,8 @@ export function VehicleTracker() {
                           <MapPin className="mr-2 h-4 w-4" />
                           <span>
                             {t('vehicle_distance', {
-                              distance: (nearbyData.nearestVehicle as any).distanceInKm ? 
-                                ((nearbyData.nearestVehicle as any).distanceInKm || 0).toFixed(1) : '0.0'
+                              distance: nearbyData.nearestVehicle.distanceInKm ? 
+                                nearbyData.nearestVehicle.distanceInKm.toFixed(1) : '0.0'
                             })}
                           </span>
                         </div>

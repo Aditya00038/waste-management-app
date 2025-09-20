@@ -25,9 +25,16 @@ export async function predictHotspots(input: Parameters<typeof serverAI.predictH
  * Get chatbot response for training assistance
  */
 export async function getTrainingChatbotResponse(
-  input: Parameters<typeof serverAI.getTrainingChatbotResponse>[0]
+  query: string, 
+  history?: { role: string; content: string }[]
 ) {
-  return serverAI.getTrainingChatbotResponse(input);
+  return serverAI.getTrainingChatbotResponse({
+    query,
+    history: history?.map(item => ({
+      role: item.role === 'user' ? 'user' as const : 'assistant' as const,
+      content: item.content
+    })) || []
+  });
 }
 
 /**

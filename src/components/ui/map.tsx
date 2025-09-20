@@ -23,9 +23,16 @@ export function Map({ center, zoom = 13, markers = [], onClick }: MapProps) {
     if (!mapRef.current) return;
     
     const initMap = async () => {
-      // In a real application, you'd want to put your API key in an environment variable
+      // Check if API key exists
+      const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+      if (!apiKey) {
+        console.warn('Google Maps API key is not set. Map will not be initialized.');
+        return;
+      }
+      
+      // Initialize the loader with the API key
       const loader = new Loader({
-        apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
+        apiKey: apiKey,
         version: 'weekly',
       });
       
@@ -56,7 +63,7 @@ export function Map({ center, zoom = 13, markers = [], onClick }: MapProps) {
         
         // Add click handler
         if (onClick) {
-          mapInstance.addListener('click', (event: google.maps.MapMouseEvent) => {
+          mapInstance.addListener('click', (event: any) => {
             const lat = event.latLng?.lat() || 0;
             const lng = event.latLng?.lng() || 0;
             onClick(lat, lng);
@@ -85,10 +92,10 @@ export function Map({ center, zoom = 13, markers = [], onClick }: MapProps) {
     markersRef.current = [];
     
     // Add new markers
-    const google = window.google;
-    if (google && google.maps) {
+    const googleInstance = (window as any).google;
+    if (googleInstance && googleInstance.maps) {
       markers.forEach(marker => {
-        const newMarker = new google.maps.Marker({
+        const newMarker = new googleInstance.maps.Marker({
           position: { lat: marker.position[0], lng: marker.position[1] },
           map: mapInstanceRef.current!,
           title: marker.title,

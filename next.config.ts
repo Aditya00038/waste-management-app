@@ -3,6 +3,7 @@ import type {NextConfig} from 'next';
 import withBundleAnalyzer from '@next/bundle-analyzer';
 // Import webpack for NormalModuleReplacementPlugin
 import webpack from 'webpack';
+import path from 'path';
 
 const withBundleAnalyzerConfig = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -16,9 +17,11 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // Fix for workspace root warning
-  outputFileTracingRoot: __dirname,
+  // Proper tracing root setup
+  distDir: '.next',
+  // Merged experimental properties
   experimental: {
+    outputFileTracingRoot: __dirname,
     optimizeCss: true,
     scrollRestoration: true,
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],

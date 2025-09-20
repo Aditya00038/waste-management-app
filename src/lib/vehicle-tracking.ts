@@ -181,9 +181,15 @@ export async function isVehicleNearby(
     const estimatedTimeHours = distanceInKm / speedKmPerHour;
     const estimatedMinutes = Math.round(estimatedTimeHours * 60);
     
+    // Add the calculated distance to the vehicle object
+    const vehicleWithDistance = {
+      ...nearestVehicle,
+      distanceInKm: distanceInKm
+    };
+    
     return {
       isNearby: distanceInKm <= radiusInKm,
-      nearestVehicle,
+      nearestVehicle: vehicleWithDistance,
       estimatedArrivalMinutes: estimatedMinutes
     };
   } catch (error) {
